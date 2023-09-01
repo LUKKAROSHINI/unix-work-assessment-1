@@ -3,7 +3,7 @@ all: README.md
 README.md: guessinggame.sh
 	echo "# The Guessing Game" > README.md
 	echo "" >> README.md
-	echo "#### Peer-graded assignment for The Unix Workbench by Johns Hopkins University on Coursera" >> README.md
+	echo "#### unix-work-assessment-1" >> README.md
 	echo "" >> README.md
 	echo "- Last run of *make* was on **$$(date +'%b %d, %Y')** at **$$(date -u +'%I:%M:%S %p') GMT**" >> README.md
 	echo "" >> README.md
