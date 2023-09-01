@@ -1,26 +1,39 @@
-#!/bin/bash
+#! /usr/bin/env bash
+function play {
+	read -n1 -rsp $'Press any key to continue:\n'
+	echo "Type in your guess:"
+	read input
+	}
 
-# Count the number of files in the current directory
-actual_count=$(ls -1 | wc -l)
+function guess {
+	echo -e "Welcome to the GUESSING GAME!\n"
+	echo -e "Guess the exact number of files in the current directory to win\n"
 
-# Function to prompt the user for their guess
-prompt_guess() {
-    read -p "Guess the number of files in the current directory: " user_guess
+	integer='^-?[0-9]+([.][0-9]+)?$'
+	number=$(ls | wc -l)
+
+	play
+
+	while [[ $input -ne $number ]]
+	do
+		if ! [[ $input =~ $integer ]]
+		then
+			echo -e "Error: You did not enter a number!\n"
+			play
+		elif [[ $input -lt $number ]]
+		then
+			echo -e "Incorrect! You guessed too low!\n"
+			play
+		elif [[ $input -gt $number ]]
+		then
+			echo -e "Incorrect! You guessed too high!\n"
+			play
+		fi
+	done
+
+	if [[ $input -eq $number ]]
+	then
+		echo "BINGO! YOU WIN!"
+	fi
 }
-
-# Initial prompt
-prompt_guess
-
-# Main loop
-while [[ $user_guess -ne $actual_count ]]; do
-    if [[ $user_guess -lt $actual_count ]]; then
-        echo "Too low! Try again."
-    else
-        echo "Too high! Try again."
-    fi
-    prompt_guess
-done
-
-# Congratulate the user when they guess correctly
-echo "Congratulations! You guessed correctly."
-echo "There are $actual_count files in the current directory."
+guess
